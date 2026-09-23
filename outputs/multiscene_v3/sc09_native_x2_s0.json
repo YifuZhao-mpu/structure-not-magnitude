@@ -1,0 +1,16 @@
+{
+ "cond": "native_x2",
+ "data": "data/multiscene_v3/sc09",
+ "seed": 0,
+ "iters": 8000,
+ "nat_w": 0.5,
+ "cam_w": 0.5,
+ "los_w": 0.5,
+ "train_time_s": 58.4,
+ "depth_mae": 0.07405152761687835,
+ "depth_mae_silhouette": 0.11995356902480125,
+ "psnr": 32.14191625183355,
+ "mae_wall": 0.05153420070807139,
+ "mae_pole": 0.9129190643628439,
+ "mae_car": 0.03781304166962703
+}

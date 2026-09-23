@@ -1,0 +1,16 @@
+{
+ "cond": "native_oracle",
+ "data": "data/multiscene_v3/sc03",
+ "seed": 1,
+ "iters": 8000,
+ "nat_w": 0.5,
+ "cam_w": 0.5,
+ "los_w": 0.5,
+ "train_time_s": 69.0,
+ "depth_mae": 0.109628160794576,
+ "depth_mae_silhouette": 0.21408292651176453,
+ "psnr": 30.932833193757403,
+ "mae_wall": 0.15385357538859049,
+ "mae_pole": 0.8208587591846784,
+ "mae_car": 0.05679683045794567
+}

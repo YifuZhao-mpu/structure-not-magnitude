@@ -1,0 +1,15 @@
+{
+ "cond": "resampled_mag",
+ "data": "data/multiscene_v3/sc03",
+ "seed": 1,
+ "iters": 8000,
+ "depth_w": 0.5,
+ "train_time_s": 41.1,
+ "n_gauss": 60000,
+ "depth_mae": 0.5050746897856394,
+ "depth_mae_silhouette": 1.1965490281581879,
+ "psnr": 26.798123139843117,
+ "mae_wall": 0.9739988148212433,
+ "mae_pole": 3.681500792503357,
+ "mae_car": 1.2435550491015117
+}

@@ -1,0 +1,13 @@
+{
+ "cond": "native_naive",
+ "data": "data/nusc_r4/scene-0013",
+ "seed": 2,
+ "iters": 8000,
+ "nat_w": 0.5,
+ "cam_w": 0.5,
+ "train_time_s": 67.0,
+ "range_mae": 1.858546257019043,
+ "range_mae_fg": 6.567669939994812,
+ "range_mae_bg": 1.8488484144210815,
+ "psnr": 9.562744928406076
+}

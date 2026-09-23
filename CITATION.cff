@@ -1,0 +1,58 @@
+cff-version: 1.2.0
+message: "If you use this code or these run records, please cite the paper."
+title: "Structure, Not Magnitude, Drives the Damage from Misprojected LiDAR Depth Supervision in 3D Gaussian Splatting"
+abstract: >-
+  Analytic scenes with closed-form per-return co-visibility, used to separate the
+  magnitude of cross-sensor depth-label error from its structure. Includes the 300-run
+  analytic matrix, a 90-run nuScenes corroboration, a 90-run depth-sliced opacity probe
+  of the damage mechanism, three frozen pre-analysis plans, and the audit records of
+  three independent source-level reviews.
+type: software
+license: MIT
+repository-code: "[TODO: public repository URL (GitHub)]"
+doi: "[TODO: Zenodo DOI]"
+date-released: "[TODO: release date, YYYY-MM-DD]"
+keywords:
+  - 3D Gaussian Splatting
+  - LiDAR depth supervision
+  - cross-sensor occlusion
+  - label-error structure
+  - pre-registration
+  - negative results
+authors:
+  - family-names: "Zhao"
+    given-names: "Yifu"
+    affiliation: "Faculty of Applied Sciences, Macao Polytechnic University, Macao 999078, China"
+    orcid: "https://orcid.org/0009-0004-2363-9269"
+  - family-names: "Zou"
+    given-names: "Xiaofan"
+    affiliation: "School of Mechanical and Electrical Engineering and Automation, Shanghai University, Shanghai 200444, China"
+    orcid: "https://orcid.org/0009-0005-5995-3150"
+  - family-names: "Wei"
+    given-names: "Junhao"
+    affiliation: "Faculty of Applied Sciences, Macao Polytechnic University, Macao 999078, China"
+    orcid: "https://orcid.org/0009-0006-0553-2032"
+  - family-names: "Li"
+    given-names: "Yanxiao"
+    affiliation: "Faculty of Applied Sciences, Macao Polytechnic University, Macao 999078, China"
+    orcid: "https://orcid.org/0009-0008-3389-1619"
+  - family-names: "Li"
+    given-names: "Haochen"
+    affiliation: "Faculty of Applied Sciences, Macao Polytechnic University, Macao 999078, China"
+    orcid: "https://orcid.org/0009-0000-8213-5854"
+  - family-names: "Im"
+    given-names: "Sio-Kei"
+    affiliation: "Macao Polytechnic University, Macao 999078, China"
+    orcid: "https://orcid.org/0000-0002-5599-4300"
+  - family-names: "Wang"
+    given-names: "Yapeng"
+    affiliation: "Faculty of Applied Sciences, Macao Polytechnic University, Macao 999078, China"
+    orcid: "https://orcid.org/0000-0002-1085-5091"
+  - family-names: "Yang"
+    given-names: "Xu"
+    affiliation: "Faculty of Applied Sciences, Macao Polytechnic University, Macao 999078, China"
+    orcid: "https://orcid.org/0000-0002-7037-3609"
+contact:
+  - family-names: "Wang"
+    given-names: "Yapeng"
+    email: "yapengwang@mpu.edu.mo"
