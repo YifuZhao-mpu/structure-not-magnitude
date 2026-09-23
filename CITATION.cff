@@ -9,7 +9,7 @@ abstract: >-
   three independent source-level reviews.
 type: software
 license: MIT
-repository-code: "[TODO: public repository URL (GitHub)]"
+repository-code: "https://github.com/YifuZhao-mpu/structure-not-magnitude"
 doi: "[TODO: Zenodo DOI]"
 date-released: "[TODO: release date, YYYY-MM-DD]"
 keywords:
