@@ -10,8 +10,8 @@ abstract: >-
 type: software
 license: MIT
 repository-code: "https://github.com/YifuZhao-mpu/structure-not-magnitude"
-doi: "[TODO: Zenodo DOI]"
-date-released: "[TODO: release date, YYYY-MM-DD]"
+doi: 10.5281/zenodo.22930375
+date-released: "2026-09-24"
 keywords:
   - 3D Gaussian Splatting
   - LiDAR depth supervision
