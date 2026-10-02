@@ -79,7 +79,7 @@ def main():
     ax.plot([11.5, 11.5], [0.60, end["wrong"] - 0.012], color="#9a9a9a", lw=0.7, ls=":")
     ax.set_xlabel("Depth relative to the analytic surface (m)")
     ax.set_ylabel("Accumulated opacity")
-    ax.set_title("The foreground is eroded, not displaced", fontsize=8.8)
+    ax.set_title("The foreground is mostly eroded, not displaced", fontsize=8.8)
     ax.grid(axis="y"); ax.set_axisbelow(True)
     ax.set_ylim(0, 1.06); ax.set_xlim(off[0] - 0.5, off[-1] + 7.5)
 

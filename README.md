@@ -72,7 +72,7 @@ python code/synthetic/run_probe_M.py 0 2 0 &  python code/synthetic/run_probe_M.
 python code/synthetic/adjudicate_M.py
 # 5. check the manuscript's numbers against the raw records (needs the manuscript
 #    source, see above, and step 1: some checks read the scenes' own primitive ids and depths)
-python code/synthetic/verify_manuscript_numbers.py     # expects 269 / 269, 0 mismatches
+python code/synthetic/verify_manuscript_numbers.py     # expects 283 / 283, 0 mismatches
 python code/synthetic/test_scene_regression.py         # 8 tests
 
 # step 1 writes data/multiscene_v3/, which every later step reads. adjudicate.py and
@@ -85,6 +85,11 @@ python code/synthetic/test_scene_regression.py         # 8 tests
 
 ## Versions
 
+- **v1.0.2** (2026-10-02) adds 14 verifier checks. A revision of the manuscript adds a
+  post-hoc row to Table 14 — opacity more than 10 m behind the surface, beyond the window
+  the mechanism probe registered — with its prose, and the verifier now re-derives those
+  numbers too (283 checks); the panel title of Figure 8 now reads "mostly eroded", as the
+  revised text does. Code paths and run records are otherwise unchanged.
 - **v1.0.1** (2026-10-02) repairs the reproduction path. In v1.0.0, `gen_multiscene.sh`
   wrote the scenes to `data/multiscene/` while every later step reads
   `data/multiscene_v3/`, so step 2 failed on a fresh checkout; and the verifier's Table 8

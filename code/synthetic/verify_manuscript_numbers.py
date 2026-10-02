@@ -401,6 +401,36 @@ chk("T14 background deficit", _dbg,
 chk("prose 17.3x ratio", _dfg / _dbg,
     num(re.search(r"\*\*([0-9.]+) times smaller\*\*", MSN).group(1)), .15)
 chk("T14 foreground deficit matches T12 M1 deficit", _dfg, _d_m1, .0002)
+# beyond P2's registered 10 m window: alpha(45 m) - alpha(t*+10 m) = alpha_full - M1 - M2
+# (post-hoc row of Table 14 and its prose, added in revision round A, 2026-10-02)
+_pb = {k: v["probe_alpha_full"] - v["probe_m1"] - v["probe_m2"] for k, v in _pm.items()}
+def _pbp(a, b):
+    d = [_pb[(x, a)] - _pb[(x, b)] for x in _ps]
+    mu = st.mean(d)
+    return mu, mu / (st.stdev(d) / math.sqrt(len(d))), sum(1 for x in d if (x > 0) == (mu > 0))
+_g14b = re.search(r"Opacity more than 10 m behind the surface \| ([0-9.]+) \| ([0-9.]+) \| ([0-9.]+) \| "
+                  r"−([0-9.]+) \(\*t\* = −([0-9.]+), (\d+)/10\)", MSN)
+for _j, _c in enumerate(_PC):
+    chk(f"T14 beyond-10m {_c}", st.mean([_pb[(x, _c)] for x in _ps]), num(_g14b.group(_j + 1)), .0002)
+_mu_b, _t_b, _w_b = _pbp("correct", "wrong")
+chk("T14 beyond-10m correct-wrong d", -_mu_b, num(_g14b.group(4)), .0002)
+chk("T14 beyond-10m correct-wrong t", -_t_b, num(_g14b.group(5)), .02)
+chk("T14 beyond-10m correct-wrong scenes", _w_b, num(_g14b.group(6)), .5)
+_g47v = re.search(r"wrong leaves ([0-9.]+) against ([0-9.]+) under shuffled_space and ([0-9.]+) under correct", MSN)
+for _j, _c in enumerate(["wrong", "shuffled_space", "correct"]):
+    chk(f"prose beyond-10m {_c}", st.mean([_pb[(x, _c)] for x in _ps]), num(_g47v.group(_j + 1)), .0002)
+_mu_ws, _t_ws, _w_ws = _pbp("wrong", "shuffled_space")
+_g47 = re.search(r"difference of \+([0-9.]+) at \*t\* = ([0-9.]+), larger in (\d+) of 10 scenes", MSN)
+chk("prose beyond-10m wrong-shuffled d", _mu_ws, num(_g47.group(1)), .0002)
+chk("prose beyond-10m wrong-shuffled t", _t_ws, num(_g47.group(2)), .02)
+chk("prose beyond-10m wrong-shuffled scenes", _w_ws, num(_g47.group(3)), .5)
+# inside the registered window the deficit grows (the net 8.5% is this loss plus the gain beyond)
+chk("prose inside-window correct-wrong", _pp("correct", "wrong", "probe_m2")[0],
+    num(re.search(r"wrong carries ([0-9.]+) less opacity there than correct", MSN).group(1)), .0002)
+# the registered window against the scenes' own residuals (Table 1)
+_rmed = [json.load(open(f"{ROOT}/data/multiscene_v3/sc{k:02d}/meta.json"))["stats"]["resid_median"] for k in range(10)]
+chk("scenes whose median residual exceeds the 10 m window", sum(1 for x in _rmed if x > 10),
+    num(re.search(r"which exceed 10 m in (\d+) of 10 scenes", MSN).group(1)), .5)
 
 # ---- remaining §3.10 / §4.7 prose claims, recomputed independently ----
 from scipy import ndimage as _ndi, stats as _sps
@@ -494,7 +524,7 @@ chk("bg shuffled-wrong delta", st.mean(_dbsw), num(_g4.group(1)), .0002)
 chk("bg shuffled-wrong t", _tb, num(_g4.group(2)), .02)
 chk("bg shuffled-wrong p", _pb, num(_g4.group(3)), .0005)
 
-EXPECTED = 269
+EXPECTED = 283
 if n != EXPECTED:
     fails.append(f"VERIFIER DEFECT: ran {n} checks, expected {EXPECTED} — a table is being skipped")
 print(f"- checks run : {n} (expected {EXPECTED})")
