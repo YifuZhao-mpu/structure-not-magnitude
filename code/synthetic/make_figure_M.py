@@ -20,8 +20,9 @@ OUT = os.path.join(ROOT, "paper-stage", "figures")
 SRC = os.path.join(ROOT, "outputs", "probe_M")
 CONDS = ["correct", "shuffled_space", "wrong"]
 LAB = {"correct": "correct", "shuffled_space": "shuffled-space",
-       "wrong": "wrong"}
-TICK = {"correct": "correct", "shuffled_space": "shuffled-\nspace", "wrong": "wrong"}
+       "wrong": "misprojected"}
+TICK = {"correct": "correct", "shuffled_space": "shuffled-\nspace",
+        "wrong": "mis-\nprojected"}
 COL = {"correct": "#D55E00", "shuffled_space": "#009E73", "wrong": "#0072B2"}
 MK = {"correct": "s", "shuffled_space": "^", "wrong": "o"}
 

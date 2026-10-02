@@ -1,7 +1,7 @@
-# Structure, Not Magnitude — code, run records and frozen plans
+# Structure, Not Just Magnitude — code and raw run records
 
-Everything needed to re-derive every number in the paper from raw run records, and to
-re-run the experiments from scratch.
+Code and raw run records for re-deriving the results reported in *Structure, Not Just Magnitude, Drives the Damage from Misprojected LiDAR Depth Supervision in 3D Gaussian
+Splatting*, and for re-running its experiments from scratch.
 
 ## What is here
 
@@ -13,20 +13,29 @@ re-run the experiments from scratch.
 | `outputs/nusc_r4/` | 90 nuScenes run records |
 | `outputs/probe_M/` | 90 mechanism-probe run records **and their per-view opacity maps** |
 | `data/nusc_index/` | the nuScenes scene index: file paths, calibrations, poses, box annotations |
+| `outputs/multiscene/` | 270 run records of the first pipeline version, which Table 8 compares against; only `verify_manuscript_numbers.py` reads them |
+| `data/multiscene/sc*/meta.json` | the recorded parameters of the first version's ten scenes, which `test_scene_regression.py` checks against the generator |
 
+## Condition names
 
-The paper-authoring directory is not part of this release. Four items can be added with
-flags to `make_release.sh`:
+The paper names its label conditions in words; the run records, file names and scripts
+use short keys.
 
-- `--with-plans` — the three frozen pre-analysis plans, the three source-review audits,
-  the three adjudication records, the integrity records and the literature gate. **The
-  paper's Data-availability statement says these are available here**, so either ship
-  them or amend that statement.
-- `--with-manuscript` — the manuscript text, which `verify_manuscript_numbers.py` needs.
-- `--with-process-record` — the internal process record.
-- `--with-simulated-review` — the drafting-time **simulated** review documents. These
-  carry a real risk of being mistaken for genuine peer review of this paper, so they ship
-  with a notice saying they are not.
+| In the paper | In the records |
+|---|---|
+| *correct* | `correct` |
+| *misprojected* | `wrong` |
+| *RGB-only* | `none` |
+| *shuffled-space* | `shuffled_space` |
+| *resampled-magnitude* | `resampled_mag` |
+| *sign-flipped* | `sign_flipped` |
+| *native* | `native` |
+| *naive transfer* | `native_naive` |
+| *oracle transfer* | `native_oracle` |
+| *native ×2* | `native_x2` |
+
+*RGB-only* is the one condition renamed rather than transliterated, because its key
+overstates what it controls for: that condition is still initialised from LiDAR returns.
 
 ## What is deliberately not here
 
@@ -36,6 +45,17 @@ flags to `make_release.sh`:
 - **`data/nusc_r4/`** — the nuScenes-derived scenes. They are not ours to redistribute.
   `code/nusc/gen_nusc_r4.py` rebuilds them from the released index against an official
   nuScenes installation, subject to that dataset's own licence.
+- **The pre-analysis plans, the source-review audit records and the literature-gate
+  record.** As the paper's Data-availability statement says, they are not part of the
+  public release: what they specify is implemented in `adjudicate.py`, `adjudicate_M.py`
+  and `code/nusc/adjudicate_r4.py`, and what they report is stated in §4.5 and §5.3 of
+  the paper.
+- **The manuscript source.** `verify_manuscript_numbers.py` checks the numbers in the
+  manuscript's text against these run records, so it reads that text from
+  `paper-stage/manuscript.md`; without it the script stops and says so.
+- **The figures.** `make_figures.py` and `make_figure_M.py` re-derive the seven data
+  figures from the run records — Figures 2–8 of the paper, written as `fig1_…` to
+  `fig7_…`. Figure 1 is a schematic of the study design.
 
 ## Reproducing
 
@@ -50,20 +70,36 @@ python code/synthetic/adjudicate.py
 # 4. the mechanism probe (90 runs) and its frozen criteria
 python code/synthetic/run_probe_M.py 0 2 0 &  python code/synthetic/run_probe_M.py 1 2 1
 python code/synthetic/adjudicate_M.py
-# 5. check every number in the manuscript against the raw records
-#    (step 1 must have run: some checks read the scenes' own primitive ids and depths)
+# 5. check the manuscript's numbers against the raw records (needs the manuscript
+#    source, see above, and step 1: some checks read the scenes' own primitive ids and depths)
 python code/synthetic/verify_manuscript_numbers.py     # expects 269 / 269, 0 mismatches
 python code/synthetic/test_scene_regression.py         # 8 tests
 
-# steps 3 and 5 need only the shipped run records; steps 2 and 4 are the GPU work and
-# reproduce them. The nuScenes path additionally needs NUSCENES_ROOT set to an official
-# installation: `NUSCENES_ROOT=/path/to/nuscenes python code/nusc/gen_nusc_r4.py`
+# step 1 writes data/multiscene_v3/, which every later step reads. adjudicate.py and
+# code/nusc/adjudicate_r4.py need only the shipped run records; adjudicate_M.py and
+# step 5 also read the scenes' geometry, so they need step 1 (CPU, seconds per scene).
+# The training runs of steps 2 and 4 are the GPU work and reproduce the shipped records.
+# The nuScenes path additionally needs NUSCENES_ROOT set to an official installation:
+# `NUSCENES_ROOT=/path/to/nuscenes python code/nusc/gen_nusc_r4.py`
 ```
 
-`verify_manuscript_numbers.py` compares the **manuscript text** against these run
-records, so it needs `paper-stage/manuscript.md`. Build with `--with-manuscript`, or drop
-the published text in at that path. Figures are not shipped either; `make_figures.py` and
-`make_figure_M.py` re-derive all seven from the run records.
+## Versions
+
+- **v1.0.1** (2026-10-02) repairs the reproduction path. In v1.0.0, `gen_multiscene.sh`
+  wrote the scenes to `data/multiscene/` while every later step reads
+  `data/multiscene_v3/`, so step 2 failed on a fresh checkout; and the verifier's Table 8
+  checks and one regression test read files the release did not carry. v1.0.1 fixes the
+  path, adds the first version's run records and scene metadata, gives the verifier and
+  the two figure scripts the paper's condition names, and brings this README and
+  `CITATION.cff` in line with the paper's Data-availability statement. The run records
+  of v1.0.0 are unchanged. The public path — scene regeneration, the three adjudicators,
+  the full regression suite and the verifier — was re-run end to end on the assembled
+  release: the regenerated scenes are byte-identical to the originals and the verifier
+  reports 269 of 269.
+- **v1.0.0** (2026-09-24) is the version the paper's results were produced from,
+  doi:[10.5281/zenodo.22930375](https://doi.org/10.5281/zenodo.22930375).
+  doi:[10.5281/zenodo.22930374](https://doi.org/10.5281/zenodo.22930374) resolves to the
+  latest version.
 
 ## A note on the plans
 
@@ -71,8 +107,7 @@ Three pre-analysis plans were frozen **before** the data they judge existed, and
 executed by one of the `adjudicate*.py` scripts here rather than restated in prose. They
 rejected five of the seven predictions this study registered, including the mechanism the
 paper originally asserted for its own main result. Three independent source-level reviews
-found fifteen defects in this pipeline, none of which we found ourselves. The plans and
-the audit records are shipped with `--with-plans`.
+found fifteen defects in this pipeline, none of which we found ourselves.
 
 ## Licence and what it covers
 

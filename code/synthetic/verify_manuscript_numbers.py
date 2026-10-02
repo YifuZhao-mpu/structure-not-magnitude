@@ -16,6 +16,16 @@ if not os.path.exists(_MSP):
                      "that does not carry it, add the published text at that path and "
                      "re-run; every number it checks is in the paper.")
 MS = open(_MSP).read()
+# The paper gives condition names in words; the run records key them differently (that
+# correspondence is stated in its Data-availability declaration). Map the display names
+# back to the keys once, here, so every check below compares like with like.
+NOMENCLATURE = {"*correct*": "correct", "*misprojected*": "wrong",
+                "*RGB-only*": "rgb_only", "*shuffled-space*": "shuffled_space",
+                "*resampled-magnitude*": "resampled_mag", "*sign-flipped*": "sign_flipped",
+                "*native*": "native", "*naive transfer*": "native_naive",
+                "*oracle transfer*": "native_oracle", "*native \u00d72*": "native_x2"}
+for _d, _k in NOMENCLATURE.items():
+    MS = MS.replace(_d, _k)
 if not os.path.isdir(f"{ROOT}/data/multiscene_v3/sc00"):
     raise SystemExit("Some checks read the analytic scenes' own geometry (primitive ids "
                      "and depths), and the release rebuilds those rather than shipping "
@@ -349,11 +359,11 @@ chk("T14 alpha45 correct-wrong d", _mu_cw,
                   MSN).group(1)), .0002)
 _mu_sw, _t_sw, _w_sw = _pp("shuffled_space", "wrong", "probe_alpha_full")
 chk("prose alpha45 shuffled-wrong d", _mu_sw,
-    num(re.search(r"− `wrong` is \+([0-9.]+) at", MSN).group(1)), .0002)
+    num(re.search(r"− wrong is \+([0-9.]+) at", MSN).group(1)), .0002)
 chk("prose alpha45 shuffled-wrong t", _t_sw,
-    num(re.search(r"− `wrong` is \+[0-9.]+ at \*t\* = ([0-9.]+)", MSN).group(1)), .02)
+    num(re.search(r"− wrong is \+[0-9.]+ at \*t\* = ([0-9.]+)", MSN).group(1)), .02)
 chk("prose alpha45 shuffled-wrong scenes", _w_sw,
-    num(re.search(r"− `wrong` is \+[0-9.]+ at \*t\* = [0-9.]+, worse in (\d+) of 10",
+    num(re.search(r"− wrong is \+[0-9.]+ at \*t\* = [0-9.]+, worse in (\d+) of 10",
                   MSN).group(1)), .5)
 # the 91.5% / 8.5% decomposition and the 17.3x control, re-derived
 _d_m1 = _pp("correct", "wrong", "probe_m1")[0]

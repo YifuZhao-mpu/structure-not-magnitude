@@ -1,0 +1,15 @@
+{
+ "cond": "shuffled_space",
+ "data": "data/multiscene/sc03",
+ "seed": 1,
+ "iters": 8000,
+ "depth_w": 0.5,
+ "train_time_s": 38.5,
+ "n_gauss": 60000,
+ "depth_mae": 0.4799730529387792,
+ "depth_mae_silhouette": 0.9609868824481964,
+ "psnr": 23.67754265882412,
+ "mae_wall": 0.7992387215296427,
+ "mae_pole": 2.339359720547994,
+ "mae_car": 1.265569140513738
+}

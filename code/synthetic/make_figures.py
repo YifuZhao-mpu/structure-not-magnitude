@@ -25,8 +25,12 @@ MARK = ["o", "s", "^", "D", "v", "P"]
 GATE_A = ["none", "correct", "shuffled_space", "resampled_mag", "sign_flipped", "wrong"]
 GATE_B = ["native", "native_naive", "native_oracle", "native_x2"]
 ALL_COND = GATE_A + GATE_B          # Table 2 averages over ALL conditions
-PRETTY = {"none": "rgb-only", "correct": "correct", "shuffled_space": "shuffled-space",
-          "resampled_mag": "resampled-mag", "sign_flipped": "sign-flipped", "wrong": "wrong"}
+# display names, matching the manuscript exactly (the key correspondence is stated in
+# the paper's Data-availability declaration)
+PRETTY = {"none": "RGB-only", "correct": "correct", "shuffled_space": "shuffled-space",
+          "resampled_mag": "resampled-magnitude", "sign_flipped": "sign-flipped",
+          "wrong": "misprojected", "native": "native", "native_naive": "naive transfer",
+          "native_oracle": "oracle transfer", "native_x2": "native \u00d72"}
 MET = [("psnr", "PSNR"), ("depth_mae", "Global\ndepth MAE"),
        ("depth_mae_silhouette", "Silhouette\nMAE"), ("mae_car", "Box\nMAE"), ("mae_pole", "Pole\nMAE")]
 ALLM = ("depth_mae", "depth_mae_silhouette", "mae_wall", "mae_pole", "mae_car", "psnr")
@@ -214,8 +218,8 @@ def fig_c1(cm, scenes):
 def fig_c2(cm, scenes):
     """C2: transfer conditions on the native baseline, including the budget control."""
     conds = ["native", "native_x2", "native_naive", "native_oracle"]
-    lab = {"native": "native", "native_x2": "native ×2 (budget)",
-           "native_naive": "+ unfiltered transfer", "native_oracle": "+ filtered transfer"}
+    lab = {"native": "native", "native_x2": "native \u00d72 (budget)",
+           "native_naive": "naive transfer", "native_oracle": "oracle transfer"}
     chans = [("depth_mae_silhouette", "Boundary band"), ("mae_pole", "Thin pole"), ("psnr", "PSNR")]
     fig, axes = plt.subplots(1, 3, figsize=(7.2, 3.0))
     for ax, (k, name) in zip(axes, chans):

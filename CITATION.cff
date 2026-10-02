@@ -1,17 +1,26 @@
 cff-version: 1.2.0
 message: "If you use this code or these run records, please cite the paper."
-title: "Structure, Not Magnitude, Drives the Damage from Misprojected LiDAR Depth Supervision in 3D Gaussian Splatting"
+title: "Structure, Not Just Magnitude, Drives the Damage from Misprojected LiDAR Depth Supervision in 3D Gaussian Splatting"
 abstract: >-
   Analytic scenes with closed-form per-return co-visibility, used to separate the
   magnitude of cross-sensor depth-label error from its structure. Includes the 300-run
   analytic matrix, a 90-run nuScenes corroboration, a 90-run depth-sliced opacity probe
-  of the damage mechanism, three frozen pre-analysis plans, and the audit records of
-  three independent source-level reviews.
+  of the damage mechanism with its per-view opacity maps, the 270 run records of the
+  first pipeline version, and the scripts that apply the three frozen pre-analysis
+  plans. The plan documents and the source-review audit records are not included.
 type: software
 license: MIT
 repository-code: "https://github.com/YifuZhao-mpu/structure-not-magnitude"
-doi: 10.5281/zenodo.22930375
-date-released: "2026-09-24"
+version: "1.0.1"
+doi: 10.5281/zenodo.22930374
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22930374
+    description: "All versions; resolves to the latest"
+  - type: doi
+    value: 10.5281/zenodo.22930375
+    description: "Version 1.0.0, from which the paper's results were produced"
+date-released: "2026-10-02"
 keywords:
   - 3D Gaussian Splatting
   - LiDAR depth supervision

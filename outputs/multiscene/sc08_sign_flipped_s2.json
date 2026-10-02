@@ -1,0 +1,15 @@
+{
+ "cond": "sign_flipped",
+ "data": "data/multiscene/sc08",
+ "seed": 2,
+ "iters": 8000,
+ "depth_w": 0.5,
+ "train_time_s": 40.1,
+ "n_gauss": 60000,
+ "depth_mae": 0.2208444227774938,
+ "depth_mae_silhouette": 0.6118219246466955,
+ "psnr": 26.97274785148485,
+ "mae_wall": 0.2306308870514234,
+ "mae_pole": 1.59916090965271,
+ "mae_car": 1.215511550505956
+}
